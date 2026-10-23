@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gestion-academica-api
+
+  datasource:
+    # Variables de entorno (recomendado en Docker / AWS / Railway)
+    # Si no existen, usa los valores por defecto (solo desarrollo local)
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/gestion_academica?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # Crea/actualiza tablas automáticamente
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+# Actuator básico (opcional, útil para healthcheck en cloud)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
